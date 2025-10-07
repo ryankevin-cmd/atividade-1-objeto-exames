@@ -66,3 +66,30 @@ class Exames {
         };
     }
 }
+
+
+
+##################################################################################################################################
+
+exemplo de uso :  
+
+
+// Criando uma questão com peso 2 e resposta correta 'a'
+const questao1 = novo Exame('a', 2);
+
+// Adicionando respostas 
+questao1.adicionar('a'); // Acertou - nota: 2
+questao1.adicionar('b'); // Errou - nota: 0
+questao1.adicionar('a'); // Acertou - nota: 2
+questao1.adicionar('c'); // Errou - nota: 0
+questao1.adicionar('a'); // Acertou - nota: 2
+
+// Testando 
+console.log('Média:', questao1.media()); // 1.2
+console.log('2 menores notas:', questao1.minimo(2)); // [0, 0]
+console.log('2 maiores notas:', questao1.maximo(2)); // [2, 2]
+console.log('Notas < 1:', questao1.menorQue(1)); // [0, 0]
+console.log('Notas > 0:', questao1.maiorQue(0)); // [2, 2, 2]
+
+
+console.log('Informações:', questao1.obterInformacoes());
