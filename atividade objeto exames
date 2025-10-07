@@ -1,0 +1,68 @@
+class Exames {
+    #peso;
+    #respostaCorreta;
+    #avaliacoes;
+
+    constructor(respostaCorreta, peso) {
+        this.#peso = peso;
+        this.#respostaCorreta = respostaCorreta;
+        this.#avaliacoes = [];
+    }
+
+    adicionar(avaliacao) {
+        this.#avaliacoes.push(avaliacao);
+    }
+
+    media() {
+        if (this.#avaliacoes.length === 0) return 0;
+        
+        const pontuacaoTotal = this.#avaliacoes.reduce((soma, resposta) => {
+            return soma + (resposta === this.#respostaCorreta ? this.#peso : 0);
+        }, 0);
+        
+        return pontuacaoTotal / this.#avaliacoes.length;
+    }
+
+    minimo(quantidade = 1) {
+        const notas = this.#obterNotas();
+        const ordenadas = notas.sort((a, b) => a - b);
+        return ordenadas.slice(0, quantidade);
+    }
+
+    maximo(quantidade = 1) {
+        const notas = this.#obterNotas();
+        const ordenadas = notas.sort((a, b) => b - a);
+        return ordenadas.slice(0, quantidade);
+    }
+
+    /**
+     * Retorna notas menores que o limite
+     * @param {number} limite - Limite superior
+     * @returns {Array<number>} Array com notas menores que o limite
+     */
+    menorQue(limite = this.#peso) {
+        const notas = this.#obterNotas();
+        return notas.filter(nota => nota < limite);
+    }
+
+    maiorQue(limite = 0) {
+        const notas = this.#obterNotas();
+        return notas.filter(nota => nota > limite);
+    }
+
+ 
+    #obterNotas() {
+        return this.#avaliacoes.map(resposta => 
+            resposta === this.#respostaCorreta ? this.#peso : 0
+        );
+    }
+
+    obterInformacoes() {
+        return {
+            peso: this.#peso,
+            respostaCorreta: this.#respostaCorreta,
+            totalAvaliacoes: this.#avaliacoes.length,
+            notas: this.#obterNotas()
+        };
+    }
+}
